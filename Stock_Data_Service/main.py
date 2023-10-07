@@ -73,5 +73,5 @@ async def search_stock(query: str):
     }
     response = requests.get(BASE_URL, params)
     data = response.json()
-
+    print(data)
     return data

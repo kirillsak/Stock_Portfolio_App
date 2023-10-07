@@ -1,0 +1,59 @@
+.search-section {
+    margin-top: 2rem;
+  }
+  
+  .search-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  input[type="text"] {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 70%;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .stock-data, .stock-news {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .stock-news {
+    font-size: 0.8rem;
+    max-height: 200px; /* Adjust this value to your preference */
+  overflow-y: auto; /* This will enable vertical scrolling when the content overflows */
+  padding-right: 15px; /* A bit of padding might make it look better */
+}
+  
+  
+.stock-data-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Adjust if you want a different layout */
+    gap: 10px;
+    background-color: #f4f4f4; /* Optional: gives a light background */
+    padding: 10px;
+    border-radius: 5px; /* Optional: makes the edges rounded */
+}
+
+.stock-data-content div {
+    padding: 5px 0; /* Adds some space between rows */
+}

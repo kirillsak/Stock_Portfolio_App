@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import PieChart from "./PieChart";
+import Portfolio from "./Portfolio";
+import Search from "./Search";
+
+import async from "hbs/lib/async";
+import "../SearchStock.css";
 
 const BACKEND_URL = "http://localhost:8000"; // Assuming your FastAPI server runs on this URL
 const BACKEND_URL_OPTIMISE = "http://localhost:8001";
@@ -12,6 +17,7 @@ function SearchStock() {
   const [stockNews, setStockNews] = useState([]);
   const [stockName, setStockName] = useState("");
   const [optimisedPortfolio, setOptimisedPortfolio] = useState({});
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     try {
@@ -26,6 +32,7 @@ function SearchStock() {
         setStockData(stockResponse.data);
         setStockName(ticker);
         setStockNews(newsResponse.data);
+        setHasSearched(true);
       }
     } catch (error) {
       console.error("Error fetching stock data:", error);
@@ -55,67 +62,43 @@ function SearchStock() {
     }
   };
 
+  const deleteStock = async (stockToDelete) => {
+    setPortfolioStocks((prevPortfolioStocks) =>
+      prevPortfolioStocks.filter((stock) => stock !== stockToDelete)
+    );
+  };
+
   return (
     <div className="container">
-      <div>
-        <h4>Portfolio: </h4>
-        <ul>
-          {portfolioStocks.map((stock, index) => (
-            <li key={index}>{stock}</li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <button onClick={optimisePortfolio}>Optimise portfolio</button>
-      </div>
-      {Object.keys(optimisedPortfolio).length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <PieChart data={optimisedPortfolio} />
+      {!hasSearched ? (
+        <div className="search-init">
+          <Search
+            query={query}
+            onQueryChange={setQuery}
+            onSearch={handleSearch}
+            stockData={stockData}
+            onAddToPortfolio={addToPortfolio}
+            stockNews={stockNews}
+          />
         </div>
-      )}
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Search for a stock..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-      {stockData && (
-        <div className="stock-data">
-          <h3>
-            Stock Data for {stockName}{" "}
-            <button onClick={addToPortfolio}>Add to Portfolio</button>
-          </h3>
-          {/* Display stock data here */}
-          <pre>{JSON.stringify(stockData, null, 2)}</pre>
-        </div>
-      )}
-      {stockNews.length > 0 && (
-        <div className="stock-news">
-          <h3>Stock News</h3>
-          {/* Display stock news here */}
-          <ul>
-            {stockNews.map((newsItem, idx) => (
-              <li key={idx}>
-                <p>
-                  <strong>Title:</strong> {newsItem.title}
-                </p>
-                <p>
-                  <strong>Sentiment Score:</strong> {newsItem.sentiment_score}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+      ) : (
+        <>
+          <Portfolio
+            portfolioStocks={portfolioStocks}
+            onOptimise={optimisePortfolio}
+            onDelete={deleteStock}
+            optimisedPortfolio={optimisedPortfolio}
+          />
+
+          <Search
+            query={query}
+            onQueryChange={setQuery}
+            onSearch={handleSearch}
+            stockData={stockData}
+            onAddToPortfolio={addToPortfolio}
+            stockNews={stockNews}
+          />
+        </>
       )}
     </div>
   );

@@ -1,0 +1,50 @@
+.portfolio-container {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.optimise-button, .delete-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.optimise-button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.stock-card {
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+}
+
+.portfolio-content {
+  display: flex;           /* Enable Flexbox */
+  justify-content: space-between;  /* Space between portfolio-stocks and PieChartWrapper */
+  align-items: start;      /* Align items to the top */
+}
+
+.portfolio-stocks {
+  flex: 1;                 /* This ensures portfolio stocks take up the available space */
+  margin-right: 20px;      /* Optional: Adds some space between the stocks and the pie chart */
+}
+
