@@ -21,3 +21,84 @@ h1 {
   color: #333;
   margin-bottom: 1rem;
 }
+
+.dashboard-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.portfolio-stocks {
+  flex: 1; /* allows this div to take up available space */
+  margin-right: 20px; /* adds a margin between the stock list and the pie chart */
+}
+
+.stock-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.stock-data, .stock-news {
+  flex: 1; 
+  padding: 10px; 
+  width: 100px;
+  height: 300px;
+  border: 2px solid #e0e0e0;
+  
+}
+
+.stock-news {
+  max-height: 300px; /* Adjust this value based on your desired height */
+  overflow-y: auto;
+  padding: 10px; /* Optional, but can improve the appearance */
+  border: 2px solid #e0e0e0; /* Optional, but can give a container feel */
+}
+.stock-card {
+  display: flex;
+  flex-direction: column; /* stacks the children (span and button) vertically */
+  align-items: flex-start; /* aligns children to the start (left) */
+  margin-bottom: 10px; /* space between each stock card */
+}
+
+.delete-button {
+  margin-top: 5px; /* adds some space between the stock name and the button */
+}
+
+.title {
+  text-align: left;
+}
+
+.flat-btn {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  padding: 2px 24px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.9;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.flat-btn:hover {opacity: 1}
+
+.card {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 1px 0;
+  background-color: #fff;
+}
+
+.header-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center; /* Center items horizontally */
+    height: 100px;
+}

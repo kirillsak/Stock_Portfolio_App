@@ -22,10 +22,7 @@ function Portfolio({
             <div key={index} className="stock-card">
               <span>
                 {stock}{" "}
-                <button
-                  className="delete-button"
-                  onClick={() => onDelete(stock)}
-                >
+                <button className="flat-btn" onClick={() => onDelete(stock)}>
                   delete
                 </button>
               </span>

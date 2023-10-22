@@ -1,6 +1,26 @@
 .search-section {
     margin-top: 2rem;
   }
+
+  .stock-dropdown {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    width: calc(100% - 2px); /* Adjust width if needed */
+    background-color: white;
+    z-index: 1000; /* Ensure dropdown is on top */
+}
+
+.stock-dropdown li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.stock-dropdown li:hover {
+    background-color: #f5f5f5;
+}
+
   
   .search-box {
     display: flex;
