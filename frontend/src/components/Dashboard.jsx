@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import StockSearch from "./StockSearch";
 import axios from "axios";
 import PieChartWrapper from "./PieChartWrapper";
+import LargeCard from "./LargeCard";
+import Sidebar from "./Sidebar";
 
 const BACKEND_URL_OPTIMISE = "http://localhost:8001";
 
@@ -77,41 +79,40 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      {portfolio.length > 0 && (
-        <>
-          <div className="header-container">
-            <h1>Portfolio</h1>
-            <button className="flat-btn" onClick={optimisePortfolio}>
-              Optimise
-            </button>
-          </div>
-          <div className="card">
-            <div className="dashboard-wrapper">
-              <div className="portfolio-stocks">
-                <h3 className="title">Stocks In Portfolio</h3>
-                {portfolio.map((stock, index) => (
-                  <div key={index} className="stock-card">
-                    <span>
-                      {stock}{" "}
-                      <button
-                        className="flat-btn"
-                        onClick={() => removeStock(stock)}
-                      >
-                        delete
-                      </button>
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <PieChartWrapper data={optimisedPortfolio} />
+    <div className="dashboard-container">
+      <div>
+        <Sidebar />
+      </div>
+      <div className="main-content">
+        <div className="card">
+          <h1>Stock Search</h1>
+        </div>
+        <StockSearch addToPortfolio={addToPortfolio} />
+        <div className="stock-list-card">
+          <h3>Stocks In Portfolio</h3>
+          {portfolio.length > 0 ? (
+            <div>
+              {portfolio.map((stock, index) => (
+                <div key={index} className="stock-list-item">
+                  <span>{stock}</span>
+                  <button
+                    className="flat-btn"
+                    onClick={() => removeStock(stock)}
+                  >
+                    delete
+                  </button>
+                </div>
+              ))}
             </div>
-          </div>
-          <br />
-          <br />
-        </>
-      )}
-      <StockSearch addToPortfolio={addToPortfolio} />
+          ) : (
+            <p>Your portfolio is empty.</p>
+          )}
+        </div>
+      </div>
+
+      <PieChartWrapper data={optimisedPortfolio} />
+
+      <br />
     </div>
   );
 }

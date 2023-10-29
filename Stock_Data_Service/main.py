@@ -48,7 +48,7 @@ def extract_article_and_sentiment(data):
             "title": title,
             "sentiment_score": sentiment_score
         })
-    return result[:10]
+    return result[:5]
 
 
 @app.get("/stock_news/{ticker}")

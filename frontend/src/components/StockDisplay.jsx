@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import StockDataCard from "./StockDataCard";
 
 function StockDisplay({ stockData, stockNews, stockName, addToPortfolio }) {
   const [displayedStockNews, setDisplayedStockNews] = useState(stockNews);
@@ -15,51 +22,59 @@ function StockDisplay({ stockData, stockNews, stockName, addToPortfolio }) {
   };
 
   return (
-    <div>
-      <h2>
+    <CardContent>
+      <Typography variant="h5" component="div">
         Stock Information for {stockName}
-        <button className="flat-btn" onClick={() => addToPortfolio(stockName)}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => addToPortfolio(stockName)}
+          style={{ marginLeft: "16px" }}
+        >
           Add to Portfolio
-        </button>
-      </h2>
+        </Button>
+      </Typography>
       <div className="stock-info-wrapper">
-        <div className="stock-data">
-          <h3>Stock Price and Volume Data</h3>
-
-          <div>
-            <strong>Open:</strong> {stockData["1. open"]}
+        <CardContent>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              flexWrap: "wrap",
+            }}
+          >
+            <StockDataCard title="Open" value={stockData["1. open"]} />
+            <StockDataCard title="High" value={stockData["2. high"]} />
+            <StockDataCard title="Low" value={stockData["3. low"]} />
+            <StockDataCard title="Close" value={stockData["4. close"]} />
+            <StockDataCard title="Volume" value={stockData["5. volume"]} />
           </div>
-          <div>
-            <strong>High:</strong> {stockData["2. high"]}
-          </div>
-          <div>
-            <strong>Low:</strong> {stockData["3. low"]}
-          </div>
-          <div>
-            <strong>Close:</strong> {stockData["4. close"]}
-          </div>
-          <div>
-            <strong>Volume:</strong> {stockData["5. volume"]}
-          </div>
-        </div>
-        <div className="stock-news">
-          <h3>Stock News</h3>
-          <button onClick={filterNegativeArticles}>Positive articles</button>
-          <ul>
+          <Typography variant="h6" component="div">
+            Stock News
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={filterNegativeArticles}
+            style={{ marginBottom: "16px" }}
+          >
+            Positive Articles
+          </Button>
+          <List>
             {displayedStockNews.map((newsItem, idx) => (
-              <li key={idx}>
-                <p>
+              <ListItem key={idx}>
+                <Typography color="text.secondary">
                   <strong>Title:</strong> {newsItem.title}
-                </p>
-                <p>
+                </Typography>
+                <Typography color="text.secondary">
                   <strong>Sentiment Score:</strong> {newsItem.sentiment_score}
-                </p>
-              </li>
+                </Typography>
+              </ListItem>
             ))}
-          </ul>
-        </div>
+          </List>
+        </CardContent>
       </div>
-    </div>
+    </CardContent>
   );
 }
 

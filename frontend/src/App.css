@@ -2,19 +2,51 @@
   font-family: 'Arial', sans-serif;
   background-color: #f4f6f8;
   min-height: 100vh;
-  display: flex;
+
   justify-content: center;
   align-items: center;
 }
 
+.stock-list-card {
+  width: 60%;
+  margin-top: 20px; /* add some space above the card */
+  background-color: #292929; /* card background */
+  color: white; /* text color */
+  border-radius: 8px; /* rounded corners */
+  padding: 15px;
+}
+
+.stock-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #444; /* add a border between list items */
+}
+
+.stock-list-item:last-child {
+  border-bottom: none; /* remove the border from the last list item */
+}
+
+.card {
+  background-color: #292929; /* card background */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px; /* rounded corners */
+}
+
+.dashboard-container {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.main-content {
+  flex-grow: 1; /* This will make sure your main content takes up the available space */
+  padding: 16px; /* Add some padding for spacing */
+}
+
 .App-header {
-  width: 80%;
-  margin: 2rem auto;
   text-align: center;
   background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 h1 {
