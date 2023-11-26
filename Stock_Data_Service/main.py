@@ -56,7 +56,13 @@ async def get_stock_data(ticker: str, api_key: str = Depends(get_api_key)):
     response = requests.get(BASE_URL, params=params)
     data = response.json()
 
-    return data['Time Series (Daily)'][list(data['Time Series (Daily)'].keys())[0]]
+    latest_data = data['Time Series (Daily)'][list(
+        data['Time Series (Daily)'].keys())[0]]
+
+    return StockModel(
+        name=ticker,
+        close_price=float(latest_data['4. close'])
+    )
 
 
 def extract_article_and_sentiment(data):

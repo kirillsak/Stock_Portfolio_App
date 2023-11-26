@@ -27,13 +27,15 @@ def test_get_stock_data():
         # Mock the API URL and return the fake response data
         mock.get(api_url, json=fake_api_response)
 
-        # Call your FastAPI endpoint
         response = client.get("/stock/AAPL")
 
         # Check if the response is as expected
+        expected_response = {
+            "name": "AAPL",
+            "close_price": 152.0
+        }
         assert response.status_code == 200
-        assert response.json(
-        ) == fake_api_response["Time Series (Daily)"]["2022-03-18"]
+        assert response.json() == expected_response
 
 
 def test_add_stock_to_portfolio():
