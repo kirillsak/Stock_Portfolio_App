@@ -1,7 +1,9 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+from enum import Enum
+
 
 app = FastAPI()
 
@@ -26,12 +28,17 @@ print(data)
 BASE_URL = 'https://www.alphavantage.co/query?'
 
 
+# dependancy injenction to avoid repetition of api key across many uses.
+def get_api_key():
+    return '3NC3CQTX6R7V0D21'
+
+
 @app.get("/stock/{ticker}")
-async def get_stock_data(ticker: str):
+async def get_stock_data(ticker: str, api_key: str = Depends(get_api_key)):
     params = {
         'function': 'TIME_SERIES_DAILY',
         'symbol': ticker,
-        'apikey': '3NC3CQTX6R7V0D21'
+        'apikey': api_key
     }
     response = requests.get(BASE_URL, params=params)
     data = response.json()
@@ -52,11 +59,11 @@ def extract_article_and_sentiment(data):
 
 
 @app.get("/stock_news/{ticker}")
-async def get_stock_news(ticker: str):
+async def get_stock_news(ticker: str, api_key: str = Depends(get_api_key)):
     params = {
         'function': 'NEWS_SENTIMENT',
         'symbol': ticker,
-        'apikey': '3NC3CQTX6R7V0D21'
+        'apikey': api_key
     }
     response = requests.get(BASE_URL, params)
     data = response.json()
@@ -65,11 +72,11 @@ async def get_stock_news(ticker: str):
 
 
 @app.get("/search_stock/{query}")
-async def search_stock(query: str):
+async def search_stock(query: str, api_key: str = Depends(get_api_key)):
     params = {
         'function': 'SYMBOL_SEARCH',
         'keywords': query,
-        'apikey': '3NC3CQTX6R7V0D21'
+        'apikey': api_key
     }
     response = requests.get(BASE_URL, params)
     data = response.json()

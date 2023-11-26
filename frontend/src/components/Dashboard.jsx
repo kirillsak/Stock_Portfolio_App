@@ -84,33 +84,32 @@ function Dashboard() {
         <Sidebar />
       </div>
       <div className="main-content">
-        <div className="card">
-          <h1>Stock Search</h1>
-        </div>
         <StockSearch addToPortfolio={addToPortfolio} />
-        <div className="stock-list-card">
-          <h3>Stocks In Portfolio</h3>
-          {portfolio.length > 0 ? (
-            <div>
-              {portfolio.map((stock, index) => (
-                <div key={index} className="stock-list-item">
-                  <span>{stock}</span>
-                  <button
-                    className="flat-btn"
-                    onClick={() => removeStock(stock)}
-                  >
-                    delete
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>Your portfolio is empty.</p>
-          )}
+        <div className="portfolio-content">
+          <div className="stock-list-card">
+            <h3>Stocks In Portfolio</h3>
+            <button onClick={optimisePortfolio}>optimise</button>
+            {portfolio.length > 0 ? (
+              <div>
+                {portfolio.map((stock, index) => (
+                  <div key={index} className="stock-list-item">
+                    <span>{stock}</span>
+                    <button
+                      className="flat-btn"
+                      onClick={() => removeStock(stock)}
+                    >
+                      delete
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Your portfolio is empty.</p>
+            )}
+          </div>
+          <PieChartWrapper data={optimisedPortfolio} />
         </div>
       </div>
-
-      <PieChartWrapper data={optimisedPortfolio} />
 
       <br />
     </div>

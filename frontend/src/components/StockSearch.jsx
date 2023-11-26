@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import StockDisplay from "./StockDisplay";
+import "../css/StockSearch.css";
 
 const BACKEND_URL = "http://localhost:8000";
 
@@ -32,24 +33,28 @@ function StockSearch({ addToPortfolio }) {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search for a stock..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button className="flat-btn" onClick={handleSearch}>
-        Search
-      </button>
-      {hasSearched && (
-        <StockDisplay
-          stockData={stockData}
-          stockNews={stockNews}
-          stockName={stockName}
-          addToPortfolio={addToPortfolio}
+    <div className="container">
+      <div className="input-field">
+        <input
+          type="text"
+          placeholder="Search for a stock..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-      )}
+        <button className="flat-btn" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
+      <div className="stock-info">
+        {hasSearched && (
+          <StockDisplay
+            stockData={stockData}
+            stockNews={stockNews}
+            stockName={stockName}
+            addToPortfolio={addToPortfolio}
+          />
+        )}
+      </div>
     </div>
   );
 }

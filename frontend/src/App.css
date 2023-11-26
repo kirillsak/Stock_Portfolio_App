@@ -6,8 +6,21 @@
   justify-content: center;
   align-items: center;
 }
+.dashboard-container {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.portfolio-content { /* New wrapper style */
+  display: flex;
+  align-items: flex-start; /* Align the tops of the two divs */
+}
 
 .stock-list-card {
+  flex-grow: 1;
   width: 60%;
   margin-top: 20px; /* add some space above the card */
   background-color: #292929; /* card background */
@@ -34,15 +47,7 @@
   border-radius: 8px; /* rounded corners */
 }
 
-.dashboard-container {
-  display: flex;
-  justify-content: space-between; 
-}
 
-.main-content {
-  flex-grow: 1; /* This will make sure your main content takes up the available space */
-  padding: 16px; /* Add some padding for spacing */
-}
 
 .App-header {
   text-align: center;
