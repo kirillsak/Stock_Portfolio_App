@@ -1,11 +1,15 @@
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import requests
 from enum import Enum
-
+from portfolio import Portfolio
+from stock import Stock
 
 app = FastAPI()
+# in memory portfolio instance which will be replaced by database
+portfolio = Portfolio()
 
 origins = [
     "*",
@@ -22,15 +26,24 @@ app.add_middleware(
 url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=3NC3CQTX6R7V0D21'
 r = requests.get(url)
 data = r.json()
-
-print(data)
-
 BASE_URL = 'https://www.alphavantage.co/query?'
 
 
 # dependancy injenction to avoid repetition of api key across many uses.
 def get_api_key():
     return '3NC3CQTX6R7V0D21'
+
+
+class StockModel(BaseModel):
+    name: str
+    close_price: float
+
+
+@app.post("/add_stock_to_portfolio")
+async def add_stock_to_portfolio(stock: StockModel):
+    new_stock = Stock(name=stock.name, close_price=stock.close_price)
+    portfolio.add_stock(new_stock)
+    return {"msg": "Stock added to portfolio"}
 
 
 @app.get("/stock/{ticker}")

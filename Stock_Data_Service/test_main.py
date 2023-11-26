@@ -34,3 +34,10 @@ def test_get_stock_data():
         assert response.status_code == 200
         assert response.json(
         ) == fake_api_response["Time Series (Daily)"]["2022-03-18"]
+
+
+def test_add_stock_to_portfolio():
+    stock_data = {"name": "AAPL", "close_price": 300.0}
+    response = client.post("/add_stock_to_portfolio/", json=stock_data)
+    assert response.status_code == 200
+    assert response.json() == {"msg": "Stock added to portfolio"}
