@@ -9,7 +9,7 @@ from stock import Stock
 
 app = FastAPI()
 # in memory portfolio instance which will be replaced by database
-portfolio = Portfolio()
+portfolio = Portfolio(1, "Fund 1")
 
 origins = [
     "*",
@@ -41,7 +41,7 @@ class StockModel(BaseModel):
 
 @app.post("/add_stock_to_portfolio")
 async def add_stock_to_portfolio(stock: StockModel):
-    new_stock = Stock(name=stock.name, close_price=stock.close_price)
+    new_stock = Stock(1, name=stock.name, close_price=stock.close_price)
     portfolio.add_stock(new_stock)
     return {"msg": "Stock added to portfolio"}
 
@@ -60,6 +60,7 @@ async def get_stock_data(ticker: str, api_key: str = Depends(get_api_key)):
         data['Time Series (Daily)'].keys())[0]]
 
     return StockModel(
+        id=1,
         name=ticker,
         close_price=float(latest_data['4. close'])
     )

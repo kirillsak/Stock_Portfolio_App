@@ -23,7 +23,7 @@ async def test_adding_api_fetched_stock_to_portfolio():
         stock2 = await get_stock_data("NFLX", "3NC3CQTX6R7V0D21")
 
         # Create a Portfolio and add the fetched stock
-        portfolio = Portfolio()
+        portfolio = Portfolio(1, "Fund 1")
         portfolio.add_stock(stock)
         portfolio.add_stock(stock2)
         print(portfolio.stocks)
