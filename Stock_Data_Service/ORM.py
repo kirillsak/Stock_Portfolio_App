@@ -1,11 +1,17 @@
-from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey, Float
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import mapper, relationship, sessionmaker
 
 from portfolio import Portfolio
 from stock import Stock
 
+# SQLAlchemy setup
+engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Initialize the MetaData object
 metadata = MetaData()
 
+# Define the tables
 stocks = Table(
     "stocks",
     metadata,
@@ -29,7 +35,6 @@ portfolio_stocks = Table(
     Column("stock_id", ForeignKey("stocks.id"))
 )
 
-
 def start_mappers():
     stocks_mapper = mapper(Stock, stocks)
     portfolios_mapper = mapper(
@@ -39,3 +44,9 @@ def start_mappers():
             'stocks': relationship(stocks_mapper, secondary=portfolio_stocks)
         }
     )
+
+# Call start_mappers to initialize the mappings
+start_mappers()
+
+# Create all tables in the database
+metadata.create_all(bind=engine)

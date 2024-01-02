@@ -7,9 +7,20 @@ from enum import Enum
 from portfolio import Portfolio
 from stock import Stock
 
+from repository import IPortfolioRepository
+from sqlalchemy_repository import SqlAlchemyPortfolioRepository
+from portfolio_service import PortfolioService
+
 app = FastAPI()
-# in memory portfolio instance which will be replaced by database
-portfolio = Portfolio(1, "Fund 1")
+
+
+def get_portfolio_repository():
+    return SqlAlchemyPortfolioRepository()
+
+def get_portfolio_service():
+    repository = get_portfolio_repository()
+    return PortfolioService(repository)
+
 
 origins = [
     "*",
@@ -39,11 +50,24 @@ class StockModel(BaseModel):
     close_price: float
 
 
-@app.post("/add_stock_to_portfolio")
-async def add_stock_to_portfolio(stock: StockModel):
-    new_stock = Stock(1, name=stock.name, close_price=stock.close_price)
-    portfolio.add_stock(new_stock)
-    return {"msg": "Stock added to portfolio"}
+@app.post("/create_portfolio")
+async def create_portfolio(service: PortfolioService = Depends(get_portfolio_service)):
+    return await service.create_portfolio()
+
+@app.post("/add_stock_to_portfolio/{portfolio_id}")
+async def add_stock_to_portfolio(portfolio_id: int, stock_data: StockModel, service: PortfolioService = Depends(get_portfolio_service)):
+    return await service.add_stock_to_portfolio(portfolio_id, stock_data)
+
+@app.get("/get_portfolio_stocks/{portfolio_id}")
+async def get_portfolio_stocks(portfolio_id: int, service: PortfolioService = Depends(get_portfolio_service)):
+    stocks = await service.get_portfolio_stocks(portfolio_id)
+    return {"stocks": stocks}
+
+@app.get("/get_portfolio_value/{portfolio_id}")
+async def get_portfolio_value(portfolio_id: int, service: PortfolioService = Depends(get_portfolio_service)):
+    value = await service.get_portfolio_value(portfolio_id)
+    return {"value": value}
+
 
 
 @app.get("/stock/{ticker}")
